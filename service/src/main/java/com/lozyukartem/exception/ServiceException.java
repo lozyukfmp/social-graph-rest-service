@@ -3,13 +3,13 @@ package com.lozyukartem.exception;
 import lombok.Data;
 
 @Data
-public class DaoException extends Exception {
+public class ServiceException extends Exception {
 
-    private DaoErrorCode code;
+    private ServiceErrorCode code;
     private Object[] params;
     private String message;
 
-    public DaoException(Throwable t, DaoErrorCode code, Object... params) {
+    public ServiceException(Throwable t, ServiceErrorCode code, Object... params) {
         super(t);
         this.code = code;
         this.params = params;

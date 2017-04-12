@@ -10,6 +10,8 @@
         <module>service</module>
         <module>dao</module>
         <module>entity</module>
+        <module>dto</module>
+        <module>converter</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -29,7 +31,9 @@
         <javassist.version>3.18.2-GA</javassist.version>
         <mysql.connector.version>5.1.32</mysql.connector.version>
         <tomcat.dbcp.version>7.0.55</tomcat.dbcp.version>
-        <lombock.version>1.16.16</lombock.version>
+        <lombok.version>1.16.16</lombok.version>
+        <model.mapper.version>0.7.4</model.mapper.version>
+        <junit.version>4.12</junit.version>
     </properties>
 
     <dependencyManagement>
@@ -101,7 +105,26 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>${lombock.version}</version>
+                <version>${lombok.version}</version>
+            </dependency>
+            <!-- Converter dependency -->
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${model.mapper.version}</version>
+            </dependency>
+            <!-- Test dependencies -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${springframework.version}</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>

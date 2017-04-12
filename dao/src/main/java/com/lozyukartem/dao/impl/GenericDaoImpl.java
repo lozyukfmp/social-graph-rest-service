@@ -8,18 +8,17 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Repository
 public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements GenericDao<AbstractEntity, PK> {
 
     @Autowired
     private SessionFactory sessionFactory;
 
     private Class<AbstractEntity> type;
+
     public GenericDaoImpl(Class<AbstractEntity> type) {
         this.type = type;
     }
@@ -52,7 +51,7 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
     }
 
     /**
-     * Getting all T entity
+     * Getting all AbstractEntity entity
      *
      * @return
      * @throws DaoException
@@ -67,10 +66,10 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
     }
 
     /**
-     * Adding T entity.
+     * Adding AbstractEntity entity.
      *
-     * @param object T entity.
-     * @return id T entity.
+     * @param object AbstractEntity entity.
+     * @return id AbstractEntity entity.
      * @throws DaoException
      */
     public PK add(AbstractEntity object) throws DaoException {
@@ -83,9 +82,9 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
     }
 
     /**
-     * Updating T entity.
+     * Updating AbstractEntity entity.
      *
-     * @param object T entity.
+     * @param object AbstractEntity entity.
      * @throws DaoException
      */
     public void update(AbstractEntity object) throws DaoException {
@@ -97,9 +96,9 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
     }
 
     /**
-     * Deleting T entity.
+     * Deleting AbstractEntity entity.
      *
-     * @param object T entity.
+     * @param object AbstractEntity entity.
      * @throws DaoException
      */
     public void delete(AbstractEntity object) throws DaoException {

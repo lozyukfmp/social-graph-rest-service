@@ -3,17 +3,15 @@ package com.lozyukartem.exception;
 import lombok.Data;
 
 @Data
-public class DaoException extends Exception {
-
-    private DaoErrorCode code;
+public class ConverterException extends Exception {
+    private ConverterErrorCode code;
     private Object[] params;
     private String message;
 
-    public DaoException(Throwable t, DaoErrorCode code, Object... params) {
+    public ConverterException(Throwable t, ConverterErrorCode code, Object... params) {
         super(t);
         this.code = code;
         this.params = params;
         this.message = String.format(code.toString(), params);
     }
-
 }
