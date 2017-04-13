@@ -1,7 +1,5 @@
 package com.lozyukartem.exception;
 
-import lombok.Data;
-
 public enum DaoErrorCode {
     SG_DAO_000("Unable to get by id"),
     SG_DAO_001("Unable to get list of object"),

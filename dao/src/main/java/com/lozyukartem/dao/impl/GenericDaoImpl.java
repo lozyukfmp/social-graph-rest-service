@@ -3,10 +3,7 @@ package com.lozyukartem.dao.impl;
 import com.lozyukartem.dao.GenericDao;
 import com.lozyukartem.exception.DaoErrorCode;
 import com.lozyukartem.exception.DaoException;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -55,12 +52,18 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
     /**
      * Getting all AbstractEntity entity
      *
+     * @param page
+     * @param size
      * @return
      * @throws DaoException
      */
-    public List getAll() throws DaoException {
+    public List getAll(Integer page, Integer size) throws DaoException {
         try {
-            List<AbstractEntity> list = getSession().createCriteria(type).list();
+            Criteria criteria = getSession().createCriteria(type);
+            criteria.setFirstResult(page);
+            criteria.setMaxResults(size);
+
+            List<AbstractEntity> list = criteria.list();
             return list;
         } catch (HibernateException e) {
             throw new DaoException(e, DaoErrorCode.SG_DAO_001);

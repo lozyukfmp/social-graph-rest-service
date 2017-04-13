@@ -9,6 +9,7 @@ import com.lozyukartem.entity.Comment;
 import com.lozyukartem.entity.Post;
 import com.lozyukartem.entity.User;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +19,26 @@ public class ConverterConfiguration {
 
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
+        final ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+
+        modelMapper.addMappings(new PropertyMap<User, UserDto>() {
+            protected void configure() {
+                skip(destination.getUserCredentialsDto().getPassword());
+            }
+        });
+
+        modelMapper.addMappings(new PropertyMap<Post, PostDto>() {
+            protected void configure() {
+                skip(destination.getUserDto().getUserCredentialsDto().getPassword());
+            }
+        });
+
+        modelMapper.addMappings(new PropertyMap<Comment, CommentDto>() {
+            protected void configure() {
+                skip(destination.getUserDto().getUserCredentialsDto().getPassword());
+            }
+        });
 
         return modelMapper;
     }
@@ -38,4 +57,5 @@ public class ConverterConfiguration {
     public Converter commentConverter() {
         return new ConverterImpl(Comment.class, CommentDto.class, modelMapper());
     }
+
 }

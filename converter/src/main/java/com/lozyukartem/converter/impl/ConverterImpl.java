@@ -1,12 +1,10 @@
 package com.lozyukartem.converter.impl;
 
+import com.lozyukartem.converter.Converter;
 import com.lozyukartem.exception.ConverterErrorCode;
 import com.lozyukartem.exception.ConverterException;
-import com.lozyukartem.converter.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
 import java.util.Collection;

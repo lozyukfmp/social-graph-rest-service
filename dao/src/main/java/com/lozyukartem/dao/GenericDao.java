@@ -9,7 +9,7 @@ import java.util.List;
 public interface GenericDao<AbstractEntity, PK extends Serializable> {
     AbstractEntity get(PK id) throws DaoException;
 
-    List<AbstractEntity> getAll() throws DaoException;
+    List<AbstractEntity> getAll(Integer page, Integer size) throws DaoException;
 
     PK add(AbstractEntity object) throws DaoException;
 

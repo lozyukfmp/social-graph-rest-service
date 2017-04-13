@@ -8,4 +8,5 @@ public class PostDaoImpl extends GenericDaoImpl<Post, String> implements PostDao
     public PostDaoImpl() {
         super(Post.class);
     }
+
 }

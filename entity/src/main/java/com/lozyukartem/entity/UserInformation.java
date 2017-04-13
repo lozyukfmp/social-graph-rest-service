@@ -1,9 +1,7 @@
 package com.lozyukartem.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,12 +9,14 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(exclude = "user")
 @Entity
 @Table(name = "user_information")
 public class UserInformation extends AbstractEntity{
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", updatable = false)
+    @JsonBackReference
     private User user;
 
     @Column(name = "email")

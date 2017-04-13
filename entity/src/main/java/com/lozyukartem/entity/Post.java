@@ -18,7 +18,7 @@ import java.util.List;
 public class Post extends AbstractEntity{
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", updatable = false)
     private User user;
 
     @Column(name = "text")
