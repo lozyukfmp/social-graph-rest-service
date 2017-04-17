@@ -1,10 +1,13 @@
 package com.lozyukartem.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public abstract class AbstractDto {
+@AllArgsConstructor
+public class AbstractDto {
     private String id;
 }

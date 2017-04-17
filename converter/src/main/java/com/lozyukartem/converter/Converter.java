@@ -1,16 +1,18 @@
 package com.lozyukartem.converter;
 
+import com.lozyukartem.dto.AbstractDto;
+import com.lozyukartem.entity.AbstractEntity;
 import com.lozyukartem.exception.ConverterException;
 
 import java.util.Collection;
 
-public interface Converter<AbstractEntity, AbstractDto> {
+public interface Converter<E extends AbstractEntity, D extends AbstractDto> {
 
-    AbstractDto toDto(AbstractEntity entity) throws ConverterException;
+    D toDto(E entity) throws ConverterException;
 
-    AbstractEntity toEntity(AbstractDto dto) throws ConverterException;
+    E toEntity(D dto) throws ConverterException;
 
-    Collection<AbstractEntity> toEntityCollection(Collection<AbstractDto> dtoCollection) throws ConverterException;
+    Collection<E> toEntityCollection(Collection<D> dtoCollection) throws ConverterException;
 
-    Collection<AbstractDto> toDtoCollection(Collection<AbstractEntity> entityCollection) throws ConverterException;
+    Collection<D> toDtoCollection(Collection<E> entityCollection) throws ConverterException;
 }

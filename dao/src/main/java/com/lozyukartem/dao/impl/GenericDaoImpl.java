@@ -1,6 +1,7 @@
 package com.lozyukartem.dao.impl;
 
 import com.lozyukartem.dao.GenericDao;
+import com.lozyukartem.entity.AbstractEntity;
 import com.lozyukartem.exception.DaoErrorCode;
 import com.lozyukartem.exception.DaoException;
 import org.hibernate.*;
@@ -11,14 +12,14 @@ import java.io.Serializable;
 import java.util.List;
 
 @Repository("genericDao")
-public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements GenericDao<AbstractEntity, PK> {
+public class GenericDaoImpl<E extends AbstractEntity, PK extends Serializable> implements GenericDao<E, PK> {
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    private Class<AbstractEntity> type;
+    private Class<E> type;
 
-    public GenericDaoImpl(Class<AbstractEntity> type) {
+    public GenericDaoImpl(Class<E> type) {
         this.type = type;
     }
 
@@ -40,9 +41,9 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
      * @return entity.
      * @throws DaoException
      */
-    public AbstractEntity get(PK id) throws DaoException {
+    public E get(PK id) throws DaoException {
         try {
-            AbstractEntity entity = (AbstractEntity) getSession().get(type, id);
+            E entity = (E) getSession().get(type, id);
             return entity;
         } catch (HibernateException e) {
             throw new DaoException(e, DaoErrorCode.SG_DAO_000);
@@ -63,9 +64,10 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
             criteria.setFirstResult(page);
             criteria.setMaxResults(size);
 
-            List<AbstractEntity> list = criteria.list();
+            List<E> list = criteria.list();
             return list;
         } catch (HibernateException e) {
+            System.out.println(e);
             throw new DaoException(e, DaoErrorCode.SG_DAO_001);
         }
     }
@@ -77,7 +79,7 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
      * @return id AbstractEntity entity.
      * @throws DaoException
      */
-    public PK add(AbstractEntity object) throws DaoException {
+    public PK add(E object) throws DaoException {
         try {
             PK id = (PK) getSession().save(object);
             return id;
@@ -92,7 +94,7 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
      * @param object AbstractEntity entity.
      * @throws DaoException
      */
-    public void update(AbstractEntity object) throws DaoException {
+    public void update(E object) throws DaoException {
         try {
             getSession().saveOrUpdate(object);
         } catch (HibernateException e) {
@@ -106,7 +108,7 @@ public class GenericDaoImpl<AbstractEntity, PK extends Serializable> implements 
      * @param object AbstractEntity entity.
      * @throws DaoException
      */
-    public void delete(AbstractEntity object) throws DaoException {
+    public void delete(E object) throws DaoException {
         try {
             getSession().delete(object);
         } catch (HibernateException e) {

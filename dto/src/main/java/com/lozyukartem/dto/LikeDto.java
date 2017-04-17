@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LikeDto extends AbstractDto {
-    private UserDto userDto;
-    private PostDto postDto;
+    private String userId;
+    private String postId;
+    private String userImageUrl;
 }

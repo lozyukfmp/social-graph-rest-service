@@ -3,9 +3,11 @@ package com.lozyukartem.configuration;
 import com.lozyukartem.converter.Converter;
 import com.lozyukartem.converter.impl.ConverterImpl;
 import com.lozyukartem.dto.CommentDto;
+import com.lozyukartem.dto.LikeDto;
 import com.lozyukartem.dto.PostDto;
 import com.lozyukartem.dto.UserDto;
 import com.lozyukartem.entity.Comment;
+import com.lozyukartem.entity.Like;
 import com.lozyukartem.entity.Post;
 import com.lozyukartem.entity.User;
 import org.modelmapper.ModelMapper;
@@ -30,13 +32,51 @@ public class ConverterConfiguration {
 
         modelMapper.addMappings(new PropertyMap<Post, PostDto>() {
             protected void configure() {
-                skip(destination.getUserDto().getUserCredentialsDto().getPassword());
+                map().setUserId(source.getUser().getId());
+                map().setUserImageUrl(source.getUser().getUserInformation().getImageUrl());
             }
         });
 
         modelMapper.addMappings(new PropertyMap<Comment, CommentDto>() {
             protected void configure() {
-                skip(destination.getUserDto().getUserCredentialsDto().getPassword());
+                map().setUserId(source.getUser().getId());
+                map().setUserImageUrl(source.getUser().getUserInformation().getImageUrl());
+                map().setPostId(source.getPost().getId());
+            }
+        });
+
+        modelMapper.addMappings(new PropertyMap<Like, LikeDto>() {
+            protected void configure() {
+                map().setUserId(source.getUser().getId());
+                map().setPostId(source.getUser().getId());
+            }
+        });
+
+        modelMapper.addMappings(new PropertyMap<PostDto, Post>() {
+            protected void configure() {
+                map().getUser().setId(source.getUserId());
+                skip(destination.getUser().getUserCredentials());
+                skip(destination.getUser().getUserInformation());
+            }
+        });
+
+        modelMapper.addMappings(new PropertyMap<CommentDto, Comment>() {
+            protected void configure() {
+                map().getUser().setId(source.getUserId());
+                map().getPost().setId(source.getPostId());
+                skip(destination.getPost().getUser());
+                skip(destination.getUser().getUserCredentials());
+                skip(destination.getUser().getUserInformation());
+            }
+        });
+
+        modelMapper.addMappings(new PropertyMap<LikeDto, Like>() {
+            protected void configure() {
+                map().getUser().setId(source.getUserId());
+                map().getPost().setId(source.getPostId());
+                skip(destination.getPost().getUser());
+                skip(destination.getUser().getUserCredentials());
+                skip(destination.getUser().getUserInformation());
             }
         });
 

@@ -6,8 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Builder
@@ -28,9 +28,12 @@ public class Post extends AbstractEntity{
     @Column(name = "time")
     private Date time;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @Column(name = "image_url")
+    private String image_url;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Like> likes;
+    private Collection<Comment> comments;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private Collection<Like> likes;
 }

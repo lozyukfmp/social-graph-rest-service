@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 @MappedSuperclass
 @Data
-public class AbstractEntity implements Serializable{
+public class AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 2535090450811888936L;
 

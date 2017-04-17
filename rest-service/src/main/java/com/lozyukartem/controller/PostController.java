@@ -1,7 +1,9 @@
 package com.lozyukartem.controller;
 
+import com.lozyukartem.dto.CommentDto;
 import com.lozyukartem.dto.PostDto;
 import com.lozyukartem.exception.ServiceException;
+import com.lozyukartem.service.CommentService;
 import com.lozyukartem.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,13 +19,27 @@ public class PostController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private CommentService commentService;
+
     @GetMapping
     public ResponseEntity<Collection<PostDto>> getPosts(@RequestParam String page, @RequestParam String size) {
         try {
             Collection<PostDto> dtoCollection = postService.getAll(page, size);
             return new ResponseEntity<Collection<PostDto>>(dtoCollection, HttpStatus.OK);
         } catch (ServiceException e) {
+            System.out.println(e);
             return new ResponseEntity<Collection<PostDto>>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{id}/comments")
+    public ResponseEntity<Collection<CommentDto>> getComments(@PathVariable String id, @RequestParam String page, @RequestParam String size) {
+        try {
+            Collection<CommentDto> dtoCollection = commentService.getAllByPostId(id, page, size);
+            return new ResponseEntity<Collection<CommentDto>>(dtoCollection, HttpStatus.OK);
+        } catch (ServiceException e) {
+            return new ResponseEntity<Collection<CommentDto>>(HttpStatus.NOT_FOUND);
         }
     }
 

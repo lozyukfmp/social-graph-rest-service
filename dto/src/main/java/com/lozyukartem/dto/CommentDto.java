@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentDto extends AbstractDto {
-    private UserDto userDto;
-    private PostDto postDto;
+    private String userId;
+    private String userImageUrl;
+    private String postId;
     private String text;
     private String time;
 }

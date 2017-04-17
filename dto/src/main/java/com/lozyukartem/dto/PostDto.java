@@ -12,7 +12,9 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDto extends AbstractDto{
-    private UserDto userDto;
+    private String userId;
+    private String userImageUrl;
+    private String imageUrl;
     private String text;
     private String time;
     private Collection<CommentDto> comments;

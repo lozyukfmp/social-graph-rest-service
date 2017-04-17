@@ -28,4 +28,7 @@ public class UserInformation extends AbstractEntity{
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
 }

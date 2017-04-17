@@ -12,17 +12,4 @@ public class UserDaoImpl extends GenericDaoImpl<User, String> implements UserDao
         super(User.class);
     }
 
-    @Override
-    public String add(User user) throws DaoException {
-        try {
-            user.getUserInformation().setUser(user);
-            user.getUserCredentials().setUser(user);
-            String id = (String) getSession().save(user);
-
-            return id;
-        } catch (HibernateException e) {
-            throw new DaoException(e, DaoErrorCode.SG_DAO_002);
-        }
-    }
-
 }

@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "comments")
-public class Comment extends AbstractEntity{
+public class Comment extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")

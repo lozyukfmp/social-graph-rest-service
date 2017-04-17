@@ -2,7 +2,8 @@ package com.lozyukartem.service.impl;
 
 import com.lozyukartem.converter.Converter;
 import com.lozyukartem.dao.GenericDao;
-import com.lozyukartem.entity.User;
+import com.lozyukartem.dto.AbstractDto;
+import com.lozyukartem.entity.AbstractEntity;
 import com.lozyukartem.exception.ConverterException;
 import com.lozyukartem.exception.DaoException;
 import com.lozyukartem.exception.ServiceErrorCode;
@@ -16,52 +17,55 @@ import java.util.Collection;
 
 @Service("genericService")
 @Transactional
-public class GenericServiceImpl<AbstractDto, AbstractEntity, PK extends Serializable>
-        implements GenericService<AbstractDto, PK> {
+public class GenericServiceImpl<D extends AbstractDto, E extends AbstractEntity, PK extends Serializable>
+        implements GenericService<D, PK> {
 
-    private GenericDao<AbstractEntity, PK> genericDao;
-    private Converter<AbstractEntity, AbstractDto> converter;
+    private GenericDao<E, PK> genericDao;
+    private Converter<E, D> converter;
 
     public GenericServiceImpl() {
 
     }
 
-    protected GenericDao<AbstractEntity, PK> getGenericDao() {
+    protected GenericDao<E, PK> getGenericDao() {
         return genericDao;
     }
 
-    protected Converter<AbstractEntity, AbstractDto> getConverter() {
+    protected Converter<E, D> getConverter() {
         return converter;
     }
 
-    public GenericServiceImpl(GenericDao<AbstractEntity, PK> genericDao,
-                              Converter<AbstractEntity, AbstractDto> converter) {
+    public GenericServiceImpl(GenericDao<E, PK> genericDao,
+                              Converter<E, D> converter) {
         this.genericDao = genericDao;
         this.converter = converter;
     }
 
-    public Collection<AbstractDto> getAll(String page, String size) throws ServiceException {
+    public Collection<D> getAll(String page, String size) throws ServiceException {
         try {
             Integer pageCount = Integer.parseInt(page);
             Integer sizeCount = Integer.parseInt(size);
 
-            Collection<AbstractEntity> entityCollection = genericDao.getAll(pageCount, sizeCount);
-            Collection<AbstractDto> dtoCollection = converter.toDtoCollection(entityCollection);
+            Collection<E> entityCollection = genericDao.getAll(pageCount, sizeCount);
+            Collection<D> dtoCollection = converter.toDtoCollection(entityCollection);
 
             return dtoCollection;
         } catch (DaoException e) {
+            System.out.println(e);
             throw new ServiceException(e, ServiceErrorCode.SG_SERVICE_000);
         } catch (ConverterException e) {
+            System.out.println(e);
             throw new ServiceException(e, ServiceErrorCode.SG_SERVICE_000);
         } catch (NumberFormatException e) {
+            System.out.println(e);
             throw new ServiceException(e, ServiceErrorCode.SG_SERVICE_000);
         }
     }
 
-    public AbstractDto get(PK id) throws ServiceException {
+    public D get(PK id) throws ServiceException {
         try {
-            AbstractEntity entity = genericDao.get(id);
-            AbstractDto dto = converter.toDto(entity);
+            E entity = genericDao.get(id);
+            D dto = converter.toDto(entity);
 
             return dto;
         } catch (DaoException e){
@@ -71,12 +75,12 @@ public class GenericServiceImpl<AbstractDto, AbstractEntity, PK extends Serializ
         }
     }
 
-    public AbstractDto add(AbstractDto dto) throws ServiceException {
+    public D add(D dto) throws ServiceException {
         try {
-            AbstractEntity entity = converter.toEntity(dto);
+            E entity = converter.toEntity(dto);
             PK key = genericDao.add(entity);
             entity = genericDao.get(key);
-            AbstractDto resultDto = converter.toDto(entity);
+            D resultDto = converter.toDto(entity);
 
             return resultDto;
         } catch (DaoException e){
@@ -86,9 +90,9 @@ public class GenericServiceImpl<AbstractDto, AbstractEntity, PK extends Serializ
         }
     }
 
-    public AbstractDto update(AbstractDto dto) throws ServiceException {
+    public D update(D dto) throws ServiceException {
         try {
-            AbstractEntity entity = converter.toEntity(dto);
+            E entity = converter.toEntity(dto);
             genericDao.update(entity);
 
             return dto;
@@ -99,10 +103,10 @@ public class GenericServiceImpl<AbstractDto, AbstractEntity, PK extends Serializ
         }
     }
 
-    public AbstractDto delete(PK id) throws ServiceException {
+    public D delete(PK id) throws ServiceException {
         try {
-            AbstractEntity entity = genericDao.get(id);
-            AbstractDto dto = converter.toDto(entity);
+            E entity = genericDao.get(id);
+            D dto = converter.toDto(entity);
             genericDao.delete(entity);
 
             return dto;

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserCredentialsDto extends AbstractDto{
+public class UserCredentialsDto extends AbstractDto {
     private String username;
     private String password;
 }

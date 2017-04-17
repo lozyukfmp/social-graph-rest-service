@@ -9,6 +9,7 @@ import com.lozyukartem.dao.impl.UserDaoImpl;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
@@ -19,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-/*@ImportResource({"classpath:hibernate4config.xml"})*/
+@ImportResource({"classpath:hibernate4config.xml"})
 public class PersistenceConfig {
 
     @Bean
@@ -37,7 +38,7 @@ public class PersistenceConfig {
         return new CommentDaoImpl();
     }
 
-    @Bean//3
+   /* @Bean//3
     public DataSource getDataSource() {
         final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
         dsLookup.setResourceRef(true);
@@ -72,6 +73,6 @@ public class PersistenceConfig {
         properties.put("hibernate.default_schema","ARTEM");
 
         return properties;
-    }
+    }*/
 
 }
